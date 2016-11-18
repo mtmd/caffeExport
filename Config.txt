@@ -2,13 +2,13 @@
 caffe_path = C:/CodeBase/Caffe/Build/x64/Release/matcaffe
 
 # Neual network definition file
-def_file = C:/CodeBase/Caffe/models/squeezenet/deploy.prototxt
+def_file = C:/CodeBase/Caffe/models/bvlc_googlenet/deploy.prototxt
 
 # Model file of the target CNN
-model_file = C:/CodeBase/Caffe/models/squeezenet/squeezenet_v1.0.caffemodel
+model_file = C:/CodeBase/Caffe/models/bvlc_googlenet/bvlc_googlenet.caffemodel
 
 # Output path in which parameters should be stored
-output_path = C:/CodeBase/CNNs/models/squeezenet
+output_path = C:/CodeBase/CNNs/models/bvlc_googlenet
 
 # Set net_params to 1 to extract parameters of CNN
 net_params = 1
@@ -17,7 +17,7 @@ net_params = 1
 intermediate_results = 1
 
 # If intermediate_results is 1, intermediate results will be extracted for the followin image.
-input_file = C:/CodeBase/CNNs/SqueezeNet/MAT_Caffe/Intermed_Results/sample_input.jpg
+input_file = sample_input.jpg
 
 # Dataset mean file.
-mean_file = C:/CodeBase/Caffe/models/bvlc_alexnet/ilsvrc_2012_mean.mat
+mean_file = ilsvrc_2012_mean.mat

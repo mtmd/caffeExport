@@ -101,7 +101,7 @@ if (intermed)
         data = net.blobs(blobName).get_data();
         blobName = strrep(blobName, '/', '_');
         blobName = strrep(blobName, '\', '_');
-        save (strcat(matPath, '/', blobName, '.mat'), 'data');
+        save (strcat(matPath, '/', num2str(i), '_', blobName, '.mat'), 'data');
     end
 end
 end
