@@ -69,7 +69,8 @@ if (params)
     numLayers = size(net.layer_names, 1);
     for i = 1:numLayers
         blobName = net.layer_names{i};
-        if (strcmp(net.layers(blobName).type, 'Convolution') || strcmp(net.layers(blobName).type, 'InnerProduct'))
+        if (strcmp(net.layers(blobName).type, 'Convolution') || ...
+            strcmp(net.layers(blobName).type, 'InnerProduct'))
             weights = net.params(blobName, 1).get_data();
             bias = net.params(blobName, 2).get_data();
             blobName = strrep(blobName, '/', '_');
@@ -78,6 +79,7 @@ if (params)
             save (strcat(matPath ,'/', blobName, '_w.mat'), 'weights');
             save (strcat(matPath , '/', blobName, '_b.mat'), 'bias');
             % Writes parameters as a binary file (float values)
+            weights = permute(weights, [2 1 3 4]);
             binaryWrite(strcat(binPath, '/', blobName, '_w.bin'), weights);
             binaryWrite(strcat(binPath, '/', blobName, '_b.bin'), bias);
         end
@@ -85,23 +87,30 @@ if (params)
 end
 %%
 % Dumping Intermediate Results
-if (intermed)
-    matPath = strcat(outputPath, '/', 'Intermediate_Results/MAT');
-    if (exist(matPath, 'dir') == 0)    
-        mkdir(matPath)
-    end
-    tokens = strsplit(inputFile, '.');
-    sz = size(tokens, 2);
-    copyfile(inputFile, strcat(matPath, '/', 'originalInput.', tokens{sz}));
-    img = preproc(inputFile, meanFile);
-    net.forward({img});
-    numBlobs = size(net.blob_names, 1);
-    for i = 1:numBlobs
-        blobName = net.blob_names{i};
-        data = net.blobs(blobName).get_data();
-        blobName = strrep(blobName, '/', '_');
-        blobName = strrep(blobName, '\', '_');
+matPath = strcat(outputPath, '/', 'Intermediate_Results/MAT');
+if (exist(matPath, 'dir') == 0)    
+    mkdir(matPath)
+end
+tokens = strsplit(inputFile, '.');
+sz = size(tokens, 2);
+copyfile(inputFile, strcat(matPath, '/', 'originalInput.', tokens{sz}));
+img = preproc(inputFile, meanFile);
+net.forward({img});
+numBlobs = size(net.blob_names, 1);
+for i = 1:numBlobs
+    blobName = net.blob_names{i};
+    data = net.blobs(blobName).get_data();
+    blobName = strrep(blobName, '/', '_');
+    blobName = strrep(blobName, '\', '_');
+    if (intermed)
         save (strcat(matPath, '/', num2str(i), '_', blobName, '.mat'), 'data');
+    end
+    if (strcmp(blobName, 'data'))
+        data = permute(data, [2 1 3]);
+        binaryWrite(strcat(binPath, '/', blobName, '.bin'), data);
+        if (intermed == 0) 
+            break;
+        end
     end
 end
 end
