@@ -69,8 +69,12 @@ if (params)
     numLayers = size(net.layer_names, 1);
     for i = 1:numLayers
         blobName = net.layer_names{i};
+        convolution = 0;
         if (strcmp(net.layers(blobName).type, 'Convolution') || ...
             strcmp(net.layers(blobName).type, 'InnerProduct'))
+            if strcmp(net.layers(blobName).type, 'Convolution') 
+                convolution = 1;
+            end
             weights = net.params(blobName, 1).get_data();
             bias = net.params(blobName, 2).get_data();
             blobName = strrep(blobName, '/', '_');
@@ -79,7 +83,9 @@ if (params)
             save (strcat(matPath ,'/', blobName, '_w.mat'), 'weights');
             save (strcat(matPath , '/', blobName, '_b.mat'), 'bias');
             % Writes parameters as a binary file (float values)
-            weights = permute(weights, [2 1 3 4]);
+            if (convolution)
+                weights = permute(weights, [2 1 3 4]);
+            end
             binaryWrite(strcat(binPath, '/', blobName, '_w.bin'), weights);
             binaryWrite(strcat(binPath, '/', blobName, '_b.bin'), bias);
         end
