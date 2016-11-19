@@ -58,8 +58,8 @@ net.reshape();
 % Dumping Parameters
 if (params)
     %Values will be saved both as mat and binary files. 
-    matPath = strcat(outputPath, '/', 'Parameters/MAT');
-    binPath = strcat(outputPath, '/', 'Parameters/Binary');
+    matPath = strcat(outputPath, '/', 'Parameters/Normal/MAT');
+    binPath = strcat(outputPath, '/', 'Parameters/Normal/Binary');
     if (exist(binPath, 'dir') == 0)
         mkdir(binPath);
     end    
@@ -90,6 +90,13 @@ if (params)
             binaryWrite(strcat(binPath, '/', blobName, '_b.bin'), bias);
         end
     end
+    % Generate Vectorized Parameters. 
+    vecPath = strcat(outputPath, '/', 'Parameters/Vectorized/Binary');
+    if (exist(vecPath, 'dir') == 0)
+        mkdir(vecPath);
+    end  
+    vectorize (matPath, binPath, vecPath);
+    % End Generating Vectorized Parameters
 end
 %%
 % Dumping Intermediate Results
