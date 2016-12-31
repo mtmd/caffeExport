@@ -2,13 +2,13 @@
 caffe_path = C:/CodeBase/Caffe/Build/x64/Release/matcaffe
 
 # Neual network definition file
-def_file = C:/CodeBase/Caffe/models/bvlc_googlenet/deploy.prototxt
+def_file = C:/CodeBase/Caffe/models/bvlc_alexnet/deploy.prototxt
 
 # Model file of the target CNN
-model_file = C:/CodeBase/Caffe/models/bvlc_googlenet/bvlc_googlenet.caffemodel
+model_file = C:/CodeBase/Caffe/models/bvlc_alexnet/bvlc_alexnet.caffemodel
 
 # Output path in which parameters should be stored
-output_path = C:/CodeBase/CNNs/models/bvlc_googlenet
+output_path = C:/CodeBase/CNNs/models/bvlc_alexnet
 
 # Set net_params to 1 to extract parameters of CNN
 net_params = 1

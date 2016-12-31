@@ -85,6 +85,10 @@ if (params)
             % Writes parameters as a binary file (float values)
             if (convolution)
                 weights = permute(weights, [2 1 3 4]);
+            elseif (strcmp(blobName, 'fc6'))
+                %ToDo: Fix this line. This is only required for the first
+                %dense layer of AlexNet
+                weights = FCPermute(weights, 6, 6, 9216, 4096);
             end
             binaryWrite(strcat(binPath, '/', blobName, '_w.bin'), weights);
             binaryWrite(strcat(binPath, '/', blobName, '_b.bin'), bias);
