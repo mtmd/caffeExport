@@ -8,7 +8,8 @@ for ii = 0:(i - 1)
         for kk = 0:(k - 1)
             for jj = 0:(j - 1)
                 if (jj < 3) 
-                    AA(counter) = A(kk + ll * 7 + jj * 7 * 7 + ii * 7 * 7 * 3 + 1);
+                    %AA(counter) = A(kk + ll * 7 + jj * 7 * 7 + ii * 7 * 7 * 3 + 1);
+                    AA(counter) = A(kk + ll * l + jj * l * l + ii * l * l * 3 + 1);
                 else
                     AA(counter) = 0;
                 end
